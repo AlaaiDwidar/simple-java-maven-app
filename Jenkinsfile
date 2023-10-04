@@ -6,7 +6,7 @@ pipeline {
     environment {
         
         DOCKER_REGISTRY = 'http://192.168.185.158:8082'
-        DOCKER_IMAGE_NAME = "app:${BUILD_NUMBER}"
+        DOCKER_IMAGE_NAME = "my-docker-registry:${BUILD_NUMBER}"
     }
 
     stages {

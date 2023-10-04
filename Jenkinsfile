@@ -12,14 +12,18 @@ pipeline {
     stages {
 
         stage ('SCM Import'){
-        checkout scmGit(branches: [[name: '*/master']], 
+            steps{
+                    checkout scmGit(branches: [[name: '*/master']], 
                         extensions: [], 
                         userRemoteConfigs: [[url: 'https://github.com/AlaaiDwidar/simple-java-maven-app.git']])
         }
+        }
         
         stage('Maven Build'){
+            steps{
                     sh "mvn clean package -DskipTests=true"
                     archive 'target/*.jar'
+                }
         }
 
         stage('Build Image') {

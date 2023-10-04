@@ -1,6 +1,6 @@
 pipeline {
     agent any
-     tools {
+    tools {
      maven 'MAVEN3'
      }
     environment {
@@ -28,18 +28,22 @@ pipeline {
 
         stage('Build Image') {
             steps {
+                script{
                 echo 'Building Image ...'
                 sh "docker build -t ${DOCKER_REGISTRY}/${DOCKER_IMAGE_NAME} ."
+            }
             }
         }
 
         stage('Push Image to Nexus') {
             steps {
+                script{
                 echo 'Pushing image to Docker hosted repository on Nexus'
                 withCredentials([usernamePassword(credentialsId: 'Nexus', passwordVariable: 'PSW', usernameVariable: 'USER')]) {
                     sh "docker login -u ${USER} -p ${PSW} 192.168.185.158:8082"
                     sh "docker push ${DOCKER_REGISTRY}/${DOCKER_IMAGE_NAME}"
                     sh "docker image rm ${DOCKER_REGISTRY}/${DOCKER_IMAGE_NAME}"
+                }
                 }
             }
         }

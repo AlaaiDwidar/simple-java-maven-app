@@ -5,7 +5,7 @@ pipeline {
      }
     environment {
         
-        DOCKER_REGISTRY = '192.168.185.204:8082'
+        DOCKER_REGISTRY = '192.168.185.204:8083'
         DOCKER_IMAGE_NAME = "app:${BUILD_NUMBER}"
     }
 
@@ -30,7 +30,7 @@ pipeline {
             steps {
                 script{
                 echo 'Building Image ...'
-                sh "docker build -t 192.168.185.204:8082/app:${BUILD_NUMBER} ."
+                sh "docker build -t 192.168.185.204:8083/app:${BUILD_NUMBER} ."
             }
             }
         }
@@ -39,10 +39,10 @@ pipeline {
             steps {
                 script{
                 echo 'Pushing image to Docker hosted repository on Nexus'
-                withCredentials([usernamePassword(credentialsId: 'Nexus', passwordVariable: 'PSW', usernameVariable: 'USER')]) {
-                    sh "docker login -u ${USER} -p ${PSW} 192.168.185.204:8082"
-                    sh "docker push 192.168.185.204:8082/app:${BUILD_NUMBER}"
-                    sh "docker image rm 192.168.185.204:8082/app:${BUILD_NUMBER}"
+                withCredentials([usernamePassword(credentialsId: 'nexus', passwordVariable: 'PSW', usernameVariable: 'USER')]) {
+                    sh "docker login -u ${USER} -p ${PSW} 192.168.185.204:8083"
+                    sh "docker push 192.168.185.204:8083/app:${BUILD_NUMBER}"
+                    sh "docker image rm 192.168.185.204:8083/app:${BUILD_NUMBER}"
                 }
                 }
             }

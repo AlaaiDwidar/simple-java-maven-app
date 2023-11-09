@@ -30,7 +30,7 @@ pipeline {
             steps {
                 script{
                 echo 'Building Image ...'
-                sh " sudo docker build -S -t 192.168.185.204:8083/app:${BUILD_NUMBER} ."  
+                sh " sudo docker build -t 192.168.185.204:8083/app:${BUILD_NUMBER} ."  
             }
             }
         }

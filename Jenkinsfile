@@ -42,7 +42,7 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'nexus', passwordVariable: 'PSW', usernameVariable: 'USER')]) {
                     sh " podman login -u ${USER} -p ${PSW} 192.168.185.204:8083 --tls-verify=false" 
                     sh " docker images"
-                    sh " docker push 192.168.185.204:8083/app:${BUILD_NUMBER} "
+                    sh " docker push http://192.168.185.204:8083/app:${BUILD_NUMBER} "
                     sh " docker image rm 192.168.185.204:8083/app:${BUILD_NUMBER}" 
                 }
                 }

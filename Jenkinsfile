@@ -30,7 +30,7 @@ pipeline {
             steps {
                 script{
                 echo 'Building Image ...'
-                sh "podman build -t 192.168.185.204:8083/app:${BUILD_NUMBER} ." 
+                sh "sudo podman build -t 192.168.185.204:8083/app:${BUILD_NUMBER} ." --tls -verify=false 
             }
             }
         }

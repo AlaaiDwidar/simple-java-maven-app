@@ -40,9 +40,9 @@ pipeline {
                 script{
                 echo 'Pushing image to Docker hosted repository on Nexus'
                 withCredentials([usernamePassword(credentialsId: 'nexus', passwordVariable: 'PSW', usernameVariable: 'USER')]) {
-                    sh " sudo podman login -u ${USER} -p ${PSW} 192.168.185.204:8083" 
-                    sh " sudo podman push 192.168.185.204:8083/app:${BUILD_NUMBER}"  
-                    sh " sudo podman image rm 192.168.185.204:8083/app:${BUILD_NUMBER}" 
+                    sh " podman login -u ${USER} -p ${PSW} 192.168.185.204:8083" --tls -verify=false 
+                    sh " podman push 192.168.185.204:8083/app:${BUILD_NUMBER}"  --tls -verify=false 
+                    sh " podman image rm 192.168.185.204:8083/app:${BUILD_NUMBER}" --tls -verify=false
                 }
                 }
             }
